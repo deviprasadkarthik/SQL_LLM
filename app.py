@@ -205,24 +205,6 @@ prompt = PromptTemplate(
     input_variables=["input"],
     template=template
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 from langchain_community.agent_toolkits import SQLDatabaseToolkit
 from langchain_community.agent_toolkits import create_sql_agent
 
@@ -237,7 +219,6 @@ prompt = PromptTemplate(
     input_variables=["input"],
     template=template
 )
-
 
 llm = ChatGoogleGenerativeAI(model="gemini-pro")
 
