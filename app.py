@@ -57,8 +57,8 @@ from langchain.prompts.prompt import PromptTemplate
 
 
 
-template = '''
-CREATE TABLE productlines (
+#template = '''
+'''CREATE TABLE productlines (
   productLine varchar(50),
   textDescription varchar(4000) DEFAULT NULL,
   htmlDescription mediumtext,
@@ -155,8 +155,25 @@ CREATE TABLE orderdetails (
   PRIMARY KEY (orderNumber,productCode),
   FOREIGN KEY (orderNumber) REFERENCES orders (orderNumber),
   FOREIGN KEY (productCode) REFERENCES products (productCode)
-);
+);'''
 
+
+
+
+template ='''
+You are a MySQL expert. Your task is to describe a table in a MySQL database to learn its schema for a better understanding of the table structure.
+
+Follow these steps:
+
+1. Open your MySQL client (such as MySQL Workbench, the MySQL command line, or another SQL client).
+
+2. Select the database that contains the table you want to describe. Use the `USE` statement to select the database:
+   ```sql
+   USE {database_name} and learn about the database and its table
+3.then  apply the desc on all the tables in the database to get the schema of the table then learn the schema of all the tables.
+The desc funtion is used to give schema of the table.
+After leanring the schemas of the table show me all the schemas of all the tables
+     
 take a user question and respond back with a SQL query.
 example:
 user question: show data for the employee named Loui
@@ -202,9 +219,29 @@ user question: {input}
 '''
 
 prompt = PromptTemplate(
-    input_variables=["input"],
+    input_variables=["database_name,input"],
     template=template
+   
 )
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 from langchain_community.agent_toolkits import SQLDatabaseToolkit
 from langchain_community.agent_toolkits import create_sql_agent
 
@@ -220,6 +257,7 @@ prompt = PromptTemplate(
     template=template
 )
 
+
 llm = ChatGoogleGenerativeAI(model="gemini-pro")
 
 
@@ -231,7 +269,8 @@ sql_agent = create_sql_agent(llm=llm,toolkit=db_toolkit,verbose=True)
 
 
 user_question = "show me the volvo customer details"
-formatted_prompt = template.format(input=user_question)
+database='classicmodels'
+formatted_prompt = template.format(input=user_question,database_name=database)
 
 response = sql_agent.run(formatted_prompt)
 
