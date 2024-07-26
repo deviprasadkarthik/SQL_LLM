@@ -55,7 +55,7 @@ from langchain.prompts.prompt import PromptTemplate
 #]
 
 
-
+#THIS TEMPLATED IF U WANT TO PASS THE SCHEMA OF THE TABLE
 
 #template = '''
 '''CREATE TABLE productlines (
@@ -158,7 +158,7 @@ CREATE TABLE orderdetails (
 );'''
 
 
-
+# THIS TEMPLATED IF U WANT THE BOT TO LEARN THE SCHEMA OF THE TABLE ON ITS OWN
 
 template ='''
 You are a MySQL expert. Your task is to describe a table in a MySQL database to learn its schema for a better understanding of the table structure.
